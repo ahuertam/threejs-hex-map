@@ -1,4 +1,3 @@
-/// <reference types="three" />
 import { Texture } from "three";
 import { QR } from "./interfaces";
 export declare function loadTexture(url: string, onProgress?: (percent: number, totalBytes: number, loadedBytes: number) => void): Promise<Texture>;

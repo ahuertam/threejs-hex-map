@@ -1,4 +1,3 @@
-/// <reference types="three" />
 import { Object3D, Camera } from "three";
 import { TileData, TileDataSource } from './interfaces';
 import Grid from "./Grid";

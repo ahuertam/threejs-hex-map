@@ -1,4 +1,3 @@
-/// <reference types="three" />
 import { TileData, QR } from './interfaces';
 import { Vector3, Camera } from 'three';
 interface MapViewController {

@@ -1,4 +1,3 @@
-/// <reference types="three" />
 import { Vector3, BufferGeometry } from "three";
 export declare const NE = 32;
 export declare const E = 16;

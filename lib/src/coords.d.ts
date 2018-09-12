@@ -1,4 +1,3 @@
-/// <reference types="three" />
 import { Vector3, Camera, Raycaster } from "three";
 import { QR } from './interfaces';
 export declare function qrToWorld(q: number, r: number, scale?: number): Vector3;

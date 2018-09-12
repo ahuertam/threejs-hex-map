@@ -1,4 +1,3 @@
-/// <reference types="three" />
 import { Height, TileData } from "./interfaces";
 import Grid from './Grid';
 import { Vector3 } from "three";

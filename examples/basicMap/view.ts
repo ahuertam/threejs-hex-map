@@ -14,8 +14,8 @@ async function loadTextureAtlas() {
     return loadJSON<TextureAtlas>(asset("land-atlas.json"))
 }
 
-async function generateMap(mapSize: number) {        
-    return generateRandomMap(mapSize, (q, r, height) => {            
+async function generateMap(mapSize: number) {
+    return generateRandomMap(mapSize, (q, r, height) => {
         const terrain = (height < 0 && "ocean") || (height > 0.75 && "mountain") || varying("grass", "plains")
         const trees = !isMountain(height) && !isWater(height) && varying(true, false) ?
             Math.floor(Math.random()*2) : undefined
@@ -25,7 +25,7 @@ async function generateMap(mapSize: number) {
 
 export async function initView(mapSize: number, initialZoom: number): Promise<MapView> {
     const textureLoader = new TextureLoader()
-    const loadTexture = (name: string) => textureLoader.load(asset(name))    
+    const loadTexture = (name: string) => textureLoader.load(asset(name))
     const options: MapMeshOptions = {
         terrainAtlas: null,
         terrainAtlasTexture: loadTexture("terrain.png"),
@@ -40,14 +40,22 @@ export async function initView(mapSize: number, initialZoom: number): Promise<Ma
     const [map, atlas] = await Promise.all([generateMap(mapSize), loadTextureAtlas()])
     options.terrainAtlas = atlas
 
+    if (window.map == null || window.map == undefined) {
+      window.map = map
+      localStorage.setItem('mapData', JSON.stringify(map))
+      window.options = options
+      //localStorage.setItem('options', JSON.stringify(options))
+    }else {
+      let mapData=
+      map = window.map
+
+    }
     const mapView = new MapView()
     mapView.zoom = initialZoom
     mapView.load(map, options)
-
     mapView.onTileSelected = (tile: TileData) => {
 
     }
-
     return mapView
 }
 

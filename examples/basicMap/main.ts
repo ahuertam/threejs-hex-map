@@ -13,7 +13,6 @@ async function init() {
 
     // texture swap
     const containers = document.querySelectorAll("#textures div")
-    console.log(containers)
     for (let i = 0; i < containers.length; i++) {
         const container = containers.item(i)
         const name = container.id
@@ -50,4 +49,3 @@ function replaceTexture(mapView: MapView, name: string, image: File) {
 }
 
 init()
-

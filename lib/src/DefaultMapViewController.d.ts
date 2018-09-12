@@ -13,7 +13,7 @@ export default class Controller implements MapViewController {
     debugOutput: HTMLElement | null;
     init(controls: MapViewControls, canvas: HTMLCanvasElement): void;
     onAnimate: (dtS: number) => void;
-    private addAnimation(animation);
+    private addAnimation;
     onKeyDown: (e: KeyboardEvent) => void;
     onMouseDown: (e: MouseEvent) => void;
     onMouseEnter: (e: MouseEvent) => void;

@@ -1,4 +1,3 @@
-/// <reference types="three" />
 import { Vector3, Camera } from 'three';
 import MapMesh from "./MapMesh";
 import { TileData, TileDataSource, QR } from './interfaces';

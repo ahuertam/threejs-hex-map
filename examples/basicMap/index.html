@@ -64,7 +64,13 @@
     </style>
 </head>
 <body>
-
+  <div id="debug">
+      <div id="textures">
+          <div id="saveFile"> <button> SAVE MAP</button></div>
+          <input type='file' id="loadFile"> <button> LOAD MAP</button></input>
+          <div id="modifyData"> <button> Modify Map</button></div>
+      </div>
+  </div>
 <canvas></canvas>
 
 <script>
@@ -76,6 +82,5 @@
     }
 </script>
 <script data-main="main" src="../../node_modules/requirejs/require.js"></script>
-
 </body>
 </html>

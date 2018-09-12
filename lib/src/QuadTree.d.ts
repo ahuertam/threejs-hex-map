@@ -1,4 +1,3 @@
-/// <reference types="three" />
 import { Vector2 } from "three";
 import { BoundingBox } from "./BoundingBox";
 export default class QuadTree<T> {
@@ -11,9 +10,9 @@ export default class QuadTree<T> {
     private readonly capacity;
     private readonly pos;
     constructor(data: T[], capacity: number, pos: (item: T) => Vector2, bounds?: BoundingBox);
-    private isLeaf();
-    private insert(item);
-    private subdivide();
+    private isLeaf;
+    private insert;
+    private subdivide;
     /**
      * Returns a list of items within the given bounding box.
      */
