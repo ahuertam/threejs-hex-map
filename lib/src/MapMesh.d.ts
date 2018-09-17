@@ -20,11 +20,6 @@ export interface MapMeshOptions {
      */
     riverAtlasTexture: Texture;
     /**
-     * Coast tile atlas texture containg parts for each possible coast variation.
-     * Use /tools/coast-atlas.py to generate.
-     */
-    coastAtlasTexture: Texture;
-    /**
      * The texture used for undiscovered tiles
      */
     undiscoveredTexture: Texture;
