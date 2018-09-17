@@ -40,7 +40,7 @@ export async function initView(mapSize: number, initialZoom: number): Promise<Ma
 
     if (window.map == null || window.map == undefined) {
       window.map = map
-      localStorage.setItem('mapData', JSON.stringify(map))
+      localStorage.setItem('mapData', JSON.parse(JSON.stringify(map)))
       window.options = options
       //localStorage.setItem('options', JSON.stringify(options))
     }else {

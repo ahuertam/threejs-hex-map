@@ -64,6 +64,9 @@ function loadFile(){
 }
 function saveFile(){
   console.log('saving')
+  let map = window.map
+  window.mapData = window.map.toArray()
+  window.map.data = window.mapData
   var mapCreated = {
     'map': window.map,
     // 'options': window.options,

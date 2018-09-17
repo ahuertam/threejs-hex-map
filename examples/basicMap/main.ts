@@ -3,10 +3,11 @@ import { initInput } from "input"
 import { paramInt, paramFloat } from './util';
 import { qrRange, range } from '../../src/util';
 import MapView from "../../src/MapView";
+import Grid from '../../src/Grid';
 
 const mapSize = paramInt("size", 20)
 const zoom = paramFloat("zoom", 20)
-var json
+var map
 
 async function init() {
     const mapView = await initView(mapSize, zoom)
@@ -32,11 +33,10 @@ function handleFileSelect(evt) {
 		reader.onload = (function (theFile) {
 			return function (e) {
 				try {
-					json = JSON.parse(e.target.result);
-					// alert('json global var has been set to parsed json of this file here it is unevaled = \n' + JSON.stringify(json));
-          var map =  JSON.stringify(json));
-          console.log(map);
+					map = JSON.parse(JSON.stringify(e.target.result))
+
           //mapView.load(map, window.options);
+          replaceMap(map)
         } catch (ex) {
 					alert('ex when trying to parse json = ' + ex);
 				}
@@ -46,6 +46,19 @@ function handleFileSelect(evt) {
 	}
 }
 document.getElementById('loadFile').addEventListener('change', handleFileSelect, false);
+
+function replaceMap(mapToChange) {
+  const mapView = new MapView()
+  mapView.zoom = 20
+  mapToChange = JSON.parse(mapToChange)
+  // console.log(JSON.parse(JSON.stringify(mapToChange)))
+  let mapGrid = new Grid(mapToChange.map._width,mapToChange.map._height)
+
+  let mapGridGenerated = mapGrid.init(mapToChange.map.data)
+  mapView.load(mapGridGenerated, window.options)
+
+  // mapView.load(mapToChange, window.options);
+}
 
 function replaceTexture(mapView: MapView, name: string, image: File) {
     const img = document.createElement("img")
