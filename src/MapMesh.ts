@@ -52,7 +52,7 @@ export interface MapMeshOptions {
     riverAtlasTexture: Texture;
 
     /**
-     * Coast tile atlas texture containg parts for each possible coast variation. 
+     * Coast tile atlas texture containg parts for each possible coast variation.
      * Use /tools/coast-atlas.py to generate.
      */
     coastAtlasTexture: Texture;
@@ -60,7 +60,7 @@ export interface MapMeshOptions {
     /**
      * The texture used for undiscovered tiles
      */
-    undiscoveredTexture: Texture; 
+    undiscoveredTexture: Texture;
 
     /**
      * Normal map for hills
@@ -251,7 +251,7 @@ export default class MapMesh extends Group implements TileDataSource {
         //options.transitionTexture.flipY = true
 
         this.loaded = Promise.all([
-            this.createLandMesh(this.tiles.filter(t => !t.isMountain)),            
+            this.createLandMesh(this.tiles.filter(t => !t.isMountain)),
             this.createMountainMesh(this.tiles.filter(t => t.isMountain)),
             this.createTrees()
         ]).catch((err) => {
@@ -286,7 +286,7 @@ export default class MapMesh extends Group implements TileDataSource {
     getTile(q: number, r: number): TileData {
         return this.localGrid.get(q, r)
     }
-    
+
     /**
      * Updates only fog and clouds visualization of existing tiles.
      * @param tiles changed tiles
@@ -297,8 +297,8 @@ export default class MapMesh extends Group implements TileDataSource {
         const mountainsGeometry = this.mountains.geometry as InstancedBufferGeometry
         const mountainsStyleAttr = mountainsGeometry.getAttribute("style") as InstancedBufferAttribute
 
-        tiles.forEach(updated => {            
-            const old = this.localGrid.get(updated.q, updated.r)            
+        tiles.forEach(updated => {
+            const old = this.localGrid.get(updated.q, updated.r)
             if (!old) return
 
             if (updated.fog != old.fog || updated.clouds != old.clouds) {
@@ -310,7 +310,7 @@ export default class MapMesh extends Group implements TileDataSource {
         })
 
         landStyleAttr.needsUpdate = true
-        mountainsStyleAttr.needsUpdate = true        
+        mountainsStyleAttr.needsUpdate = true
     }
 
     private updateFogStyle(attr: InstancedBufferAttribute, index: number, fog: boolean, clouds: boolean) {
@@ -444,7 +444,7 @@ export default class MapMesh extends Group implements TileDataSource {
         })
 
         this.mountains = new Mesh(geometry, material)
-        this.mountains.frustumCulled = false            
+        this.mountains.frustumCulled = false
 
         this.add(this.mountains)
     }
@@ -555,7 +555,7 @@ function computeCoastTextureIndex(grid: Grid<TileData>, tile: TileData): number 
 
 function isNextOrPrevRiverTile(grid: Grid<TileData>, tile: TileData, q: number, r: number, coastCount: {count: number}) {
     const neighbor = grid.get(q, r)
-    
+
     if (neighbor && neighbor.rivers && tile && tile.rivers) {
         for (let self of tile.rivers) {
             for (let other of neighbor.rivers) {

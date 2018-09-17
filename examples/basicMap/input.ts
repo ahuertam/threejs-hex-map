@@ -76,7 +76,7 @@ function saveDataToFile(mapData){
   var hiddenElement = document.createElement('a');
   hiddenElement.href = 'data:attachment/text,' + encodeURI(objetctToSave);
   hiddenElement.target = '_blank';
-  hiddenElement.download = 'mapData.txt';
+  hiddenElement.download = 'mapData.json';
   hiddenElement.click();
 }
 function modifyData() {
