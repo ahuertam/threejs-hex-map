@@ -16,7 +16,7 @@ async function loadTextureAtlas() {
 
 async function generateMap(mapSize: number) {
     return generateRandomMap(mapSize, (q, r, height) => {
-        const terrain = (height < 0 && "ocean") || (height > 0.75 && "mountain") || varying("grass", "plains")
+        const terrain = (height > 0.75 && "mountain") || varying("grass", "plains")
         const trees = !isMountain(height) && !isWater(height) && varying(true, false) ?
             Math.floor(Math.random()*2) : undefined
         return {q, r, height, terrain, treeIndex: trees, rivers: null, fog: false, clouds: false }
@@ -30,7 +30,6 @@ export async function initView(mapSize: number, initialZoom: number): Promise<Ma
         terrainAtlas: null,
         terrainAtlasTexture: loadTexture("terrain.png"),
         hillsNormalTexture: loadTexture("hills-normal.png"),
-        coastAtlasTexture: loadTexture("coast-diffuse.png"),
         riverAtlasTexture: loadTexture("river-diffuse.png"),
         undiscoveredTexture: loadTexture("paper.jpg"),
         transitionTexture: loadTexture("transitions.png"),
