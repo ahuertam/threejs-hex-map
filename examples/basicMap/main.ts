@@ -6,31 +6,46 @@ import MapView from "../../src/MapView";
 
 const mapSize = paramInt("size", 20)
 const zoom = paramFloat("zoom", 20)
+var json
 
 async function init() {
     const mapView = await initView(mapSize, zoom)
     initInput(mapView)
+    // map loading
+    function handleFileSelect(evt) {
+    	var files = evt.target.files; // FileList object
+    	// files is a FileList of File objects. List some properties.
+      }
 
-    // texture swap
-    const containers = document.querySelectorAll("#textures div")
-    for (let i = 0; i < containers.length; i++) {
-        const container = containers.item(i)
-        const name = container.id
-
-        container.addEventListener("dragenter", noop, false)
-        container.addEventListener("dragexit", noop, false)
-        container.addEventListener("dragover", noop, false)
-        container.addEventListener("drop", (e: DragEvent) => {
-            e.preventDefault()
-            replaceTexture(mapView, name, e.dataTransfer.files[0])
-        }, false)
-    }
+    document.getElementById('loadFile').addEventListener('change', handleFileSelect, false);
 }
 
+function handleFileSelect(evt) {
+	var files = evt.target.files; // FileList object
 
-function noop(e: DragEvent) {
-    e.preventDefault()
+	// files is a FileList of File objects. List some properties.
+	var output = [];
+	for (var i = 0, f; f = files[i]; i++) {
+		var reader = new FileReader();
+
+		// Closure to capture the file information.
+		reader.onload = (function (theFile) {
+			return function (e) {
+				try {
+					json = JSON.parse(e.target.result);
+					// alert('json global var has been set to parsed json of this file here it is unevaled = \n' + JSON.stringify(json));
+          var map =  JSON.stringify(json));
+          console.log(map);
+          //mapView.load(map, window.options);
+        } catch (ex) {
+					alert('ex when trying to parse json = ' + ex);
+				}
+			}
+		})(f);
+		reader.readAsText(f);
+	}
 }
+document.getElementById('loadFile').addEventListener('change', handleFileSelect, false);
 
 function replaceTexture(mapView: MapView, name: string, image: File) {
     const img = document.createElement("img")
