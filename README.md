@@ -4,7 +4,7 @@
 
 A simple 3D hexagonal terrain map based on three.js.
 
-![Screenshot](examples/random/screenshot.jpg)
+![Screenshot](examples/basicMap/screenshot.jpg)
 
 ## MARS trials
 * Usar el ejemplo basicMap
