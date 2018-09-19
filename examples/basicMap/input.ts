@@ -22,6 +22,18 @@ export function initInput(mapView: MapView) {
         [KEY_CODES.E]: {
             down: () => mapView.setZoom(mapView.getZoom() * 0.9)
         },
+        [KEY_CODES.A]: {
+              down: () => mapView.rotateVector(((new THREE.Vector3(0, 1, 0)).normalize()), 1 * Math.PI / 180))
+        },
+        [KEY_CODES.W]: {
+            down: () => mapView.rotateVector(((new THREE.Vector3(1, 0, 0)).normalize()), 1 * Math.PI / 180))
+        },
+        [KEY_CODES.S]: {
+            down: () => mapView.rotateVector(((new THREE.Vector3(1, 0, 0)).normalize()), -1 * Math.PI / 180))
+        },
+        [KEY_CODES.D]: {
+              down: () => mapView.rotateVector(((new THREE.Vector3(0, 1, 0)).normalize()), -1 * Math.PI / 180))
+        },
         [KEY_CODES.Q]: {
             down: () => mapView.setZoom(mapView.getZoom() * 1.1)
         },
@@ -63,7 +75,6 @@ function loadFile(){
 
 }
 function saveFile(){
-  console.log('saving')
   let map = window.map
   window.mapData = window.map.toArray()
   window.map.data = window.mapData
@@ -83,9 +94,9 @@ function saveDataToFile(mapData){
   hiddenElement.click();
 }
 function modifyData() {
-    console.log(window.map)
-    console.log(window.options)
-    console.log(window.mapView)
+    // console.log(window.map)
+    // console.log(window.options)
+    // console.log(window.mapView)
     let mapView = window.mapView
     window.map._height =8
     window.map._width =8

@@ -34,6 +34,8 @@ export default class MapView implements MapViewControls, TileDataSource {
      * Sets up the camera with the given Z position (height) and so that the view center (the point the camera is pointed at) doesn't change.
      */
     setZoom(z: number): this;
+    rotate(): void;
+    rotateVector(vectorToUse: any, degInRad: any): void;
     readonly scrollDir: Vector3;
     onTileSelected: (tile: TileData) => void;
     onLoaded: () => void;

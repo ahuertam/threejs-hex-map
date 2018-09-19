@@ -3,13 +3,13 @@
 [![Build Status](https://travis-ci.org/Bunkerbewohner/threejs-hex-map.svg?branch=master)](https://travis-ci.org/Bunkerbewohner/threejs-hex-map)
 
 A simple 3D hexagonal terrain map based on three.js.
- 
+
 ![Screenshot](examples/random/screenshot.jpg)
 
 ## Overview
 
-* hexagonal tiles with water, flat land, hills, mountains, rivers, trees and coast
-* one texture atlas each for terrain textures, river tiles, and coast tiles
+* hexagonal tiles  flat land, hills, mountains,and rocks
+* one texture atlas each for terrain textures
 * blending mask texture for transitions between tiles
 * two-tier fog of war like in Civilization
 

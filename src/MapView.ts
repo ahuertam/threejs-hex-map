@@ -19,7 +19,7 @@ export default class MapView implements MapViewControls, TileDataSource {
     private _camera: PerspectiveCamera
     private _scene: Scene
     private _renderer: WebGLRenderer
-    private _scrollDir = new Vector3(0, 0, 0)    
+    private _scrollDir = new Vector3(0, 0, 0)
     private _lastTimestamp = Date.now()
     private _zoom: number = 25
     private _canvas: HTMLCanvasElement
@@ -89,7 +89,15 @@ export default class MapView implements MapViewControls, TileDataSource {
 
         return this
     }
-
+    // ROTATE view
+    rotate(){
+    let degInRad = -1 * Math.PI / 180
+    this._camera.rotateOnAxis((new THREE.Vector3(0, 1, 0)).normalize(), degInRad);
+  }
+  rotateVector(vectorToUse , degInRad){
+    this._camera.rotateOnAxis(vectorToUse, degInRad)
+  }
+    //
     get scrollDir() {
         return this._scrollDir
     }
@@ -122,7 +130,7 @@ export default class MapView implements MapViewControls, TileDataSource {
         const renderer = this._renderer = new WebGLRenderer({
             canvas: canvas,
             devicePixelRatio: window.devicePixelRatio
-        })        
+        })
 
         if (renderer.extensions.get('ANGLE_instanced_arrays') === false) {
             throw new Error("Your browser is not supported (missing extension ANGLE_instanced_arrays)")
@@ -132,7 +140,7 @@ export default class MapView implements MapViewControls, TileDataSource {
         renderer.setSize(window.innerWidth, window.innerHeight)
 
         window.addEventListener('resize', (e) => this.onWindowResize(e), false);
-                
+
         // setup camera
         camera.rotation.x = Math.PI / 4.5
         this.setZoom(MapView.DEFAULT_ZOOM)
@@ -141,16 +149,16 @@ export default class MapView implements MapViewControls, TileDataSource {
         // tile selector
         this._tileSelector.position.setZ(0.1)
         this._scene.add(this._tileSelector)
-        this._tileSelector.visible = true        
+        this._tileSelector.visible = true
 
         // start rendering loop
-        this.animate(0)        
+        this.animate(0)
         this._controller.init(this, canvas)
     }
 
     load(tiles: Grid<TileData>, options: MapMeshOptions) {
         this._tileGrid = tiles
-        this._selectedTile = this._tileGrid.get(0, 0)        
+        this._selectedTile = this._tileGrid.get(0, 0)
 
         if ((tiles.width * tiles.height) < Math.pow(512, 2)) {
             const mesh = this._mapMesh = new MapMesh(tiles.toArray(), options) //, tiles)
@@ -241,7 +249,7 @@ export default class MapView implements MapViewControls, TileDataSource {
         this._camera.position.copy(this.getCameraFocusPositionWorld(v))
     }
 
-    selectTile(tile: TileData) {        
+    selectTile(tile: TileData) {
         const worldPos = qrToWorld(tile.q, tile.r)
         this._tileSelector.position.set(worldPos.x, worldPos.y, 0.1)
         if (this._onTileSelected) {
@@ -263,6 +271,6 @@ export default class MapView implements MapViewControls, TileDataSource {
         var roundedAxialPos = cubeToAxial(roundedCubePos.x, roundedCubePos.y, roundedCubePos.z)
 
         // just look up the coords in our grid
-        return this._tileGrid.get(roundedAxialPos.q, roundedAxialPos.r)        
+        return this._tileGrid.get(roundedAxialPos.q, roundedAxialPos.r)
     }
 }
