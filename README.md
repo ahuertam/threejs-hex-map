@@ -6,6 +6,12 @@ A simple 3D hexagonal terrain map based on three.js.
 
 ![Screenshot](examples/random/screenshot.jpg)
 
+## MARS trials
+* Usar el ejemplo basicMap
+* Hay que compilar primero para actualizar los cambios y luego arrancar el servidor
+* Nuevos controles wasd para mover la vista y o para crear un objeto.
+
+
 ## Overview
 
 * hexagonal tiles  flat land, hills, mountains,and rocks

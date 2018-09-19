@@ -90,10 +90,6 @@ export default class MapView implements MapViewControls, TileDataSource {
         return this
     }
     // ROTATE view
-    rotate(){
-    let degInRad = -1 * Math.PI / 180
-    this._camera.rotateOnAxis((new THREE.Vector3(0, 1, 0)).normalize(), degInRad);
-  }
   rotateVector(vectorToUse , degInRad){
     this._camera.rotateOnAxis(vectorToUse, degInRad)
   }
@@ -183,6 +179,14 @@ export default class MapView implements MapViewControls, TileDataSource {
 
     getTile(q: number, r: number) {
         return this._mapMesh.getTile(q, r)
+    }
+    addObject(){
+      // TODO METODO QUE OBTENGA LA POSICION DE LA CASILLA SELECCIONADA Y CREE AHI EL CUBO
+      let cursorPos = this._tileSelector.position
+      var geometry = new THREE.BoxGeometry( cursorPos.x, cursorPos.y, cursorPos.z );
+      var material = new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff } );
+      var cube = new THREE.Mesh( geometry, material );
+      this._scene.add( cube )
     }
 
     private animate = (timestamp: number) => {

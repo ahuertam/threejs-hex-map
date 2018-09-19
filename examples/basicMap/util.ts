@@ -12,7 +12,8 @@ export const KEY_CODES = {
     A: 65,
     W: 87,
     S: 83,
-    D: 68
+    D: 68,
+    O: 79
 }
 
 export interface KeyActions {

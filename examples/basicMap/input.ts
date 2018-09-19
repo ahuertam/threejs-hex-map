@@ -23,19 +23,22 @@ export function initInput(mapView: MapView) {
             down: () => mapView.setZoom(mapView.getZoom() * 0.9)
         },
         [KEY_CODES.A]: {
-              down: () => mapView.rotateVector(((new THREE.Vector3(0, 1, 0)).normalize()), 1 * Math.PI / 180))
+              down: () => mapView.rotateVector(((new THREE.Vector3(0, 1, 0)).normalize()),( 1 * Math.PI / 180)))
         },
         [KEY_CODES.W]: {
-            down: () => mapView.rotateVector(((new THREE.Vector3(1, 0, 0)).normalize()), 1 * Math.PI / 180))
+            down: () => mapView.rotateVector(((new THREE.Vector3(1, 0, 0)).normalize()),( 1 * Math.PI / 180)))
         },
         [KEY_CODES.S]: {
-            down: () => mapView.rotateVector(((new THREE.Vector3(1, 0, 0)).normalize()), -1 * Math.PI / 180))
+            down: () => mapView.rotateVector(((new THREE.Vector3(1, 0, 0)).normalize()), (-1 * Math.PI / 180)))
         },
         [KEY_CODES.D]: {
-              down: () => mapView.rotateVector(((new THREE.Vector3(0, 1, 0)).normalize()), -1 * Math.PI / 180))
+              down: () => mapView.rotateVector(((new THREE.Vector3(0, 1, 0)).normalize()), (-1 * Math.PI / 180)))
         },
         [KEY_CODES.Q]: {
             down: () => mapView.setZoom(mapView.getZoom() * 1.1)
+        },
+        [KEY_CODES.O]: {
+            down: () =>  mapView.addObject()
         },
         [KEY_CODES.G]: {
             down: () => mapView.mapMesh.showGrid = !mapView.mapMesh.showGrid

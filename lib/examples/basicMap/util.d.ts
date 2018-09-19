@@ -11,6 +11,7 @@ export declare const KEY_CODES: {
     W: number;
     S: number;
     D: number;
+    O: number;
 };
 export interface KeyActions {
     [keyCode: number]: KeyAction;
