@@ -181,18 +181,15 @@ export default class MapView implements MapViewControls, TileDataSource {
         return this._mapMesh.getTile(q, r)
     }
     addObject(){
-      // var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-      // var material = new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff } );
-
       var light = this.addSpotLight()
       // TODO METODO QUE OBTENGA LA POSICION DE LA CASILLA SELECCIONADA Y CREE AHI EL CUBO
       let cursorPos = this._tileSelector.position
       console.log(cursorPos)
       var cubeGeo = new THREE.BoxGeometry( 1, 1, 1 );
-			var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c, map: new THREE.TextureLoader().load( '../../assets/square-outline-textured.png' ) } );
+			var cubeMaterial = new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff, map: new THREE.TextureLoader().load( '../../assets/square-outline-textured.png' ) } );
       var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
-      // voxel.position.copy( intersect.point ).add( intersect.face.normal );
-			// voxel.position.divideScalar( 50 ).floor().multiplyScalar( 50 ).addScalar( 25 );
+      voxel.position.set( cursorPos.x, cursorPos.y, cursorPos.z )
+
 			this._scene.add( voxel );
       this._scene.add( light );
     }
