@@ -16,7 +16,7 @@ async function loadTextureAtlas() {
 
 async function generateMap(mapSize: number) {
     return generateRandomMap(mapSize, (q, r, height) => {
-        const terrain = (height > 0.75 && "mountain") || varying("tundra", "plains")
+        const terrain = (height > 0.75 && "mountain") || varying("tundra", "plains","desert","grass","snow","ocean")
         const trees = !isMountain(height) && !isWater(height) && varying(true, false) ?
             Math.floor(Math.random()*2) : undefined
         return {q, r, height, terrain, treeIndex: trees,fog: false, clouds: false }
