@@ -188,10 +188,12 @@ export default class MapView implements MapViewControls, TileDataSource {
       var cubeGeo = new THREE.BoxGeometry( 1, 1, 1 );
 			var cubeMaterial = new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff, map: new THREE.TextureLoader().load( '../../assets/square-outline-textured.png' ) } );
       var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
-      voxel.position.set( cursorPos.x, cursorPos.y, cursorPos.z )
+      voxel.position.set( cursorPos.x, cursorPos.y, 0.2 )
 
 			this._scene.add( voxel );
       this._scene.add( light );
+      this.updateTiles(this._tileGrid.data)
+      // this._renderer.render(this._scene, this._camera);
     }
     addSpotLight(){
       var light = new THREE.SpotLight( 0xffffff, 1.5 );
