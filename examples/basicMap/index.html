@@ -90,12 +90,14 @@
     </style>
 </head>
 <body>
+  <div id="text">Use arrow keys or mouse drag to move the map, mousewheel to zoom. Click to select tile, Space to focus on selection. G toggles the grid. Use WASD keys to move the view and O key to add an Object.</div>
   <div id="debug">
       <div id="textures">
           <div id="saveFile"> <button> SAVE MAP</button></div>
           <label for="loadFile" class="btn btn-primary">LOAD MAP</label>
           <input type='file' id="loadFile" style="display: none"></input>
           <div id="modifyData"> <button> Modify Map</button></div>
+      <div id="coordinates"></div>
       </div>
   </div>
 <canvas></canvas>

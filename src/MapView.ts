@@ -185,25 +185,25 @@ export default class MapView implements MapViewControls, TileDataSource {
       // TODO METODO QUE OBTENGA LA POSICION DE LA CASILLA SELECCIONADA Y CREE AHI EL CUBO
       let cursorPos = this._tileSelector.position
       console.log(cursorPos)
-      var cubeGeo = new THREE.BoxGeometry( 1, 1, 1 );
-			var cubeMaterial = new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff, map: new THREE.TextureLoader().load( '../../assets/square-outline-textured.png' ) } );
-      var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
+      var cubeGeo = new THREE.BoxGeometry( 1, 1, 1 )
+			var cubeMaterial = new THREE.MeshPhongMaterial( { color: Math.random() * 0xffffff, map: new THREE.TextureLoader().load( '../../assets/square-outline-textured.png' ) } )
+      var voxel = new THREE.Mesh( cubeGeo, cubeMaterial )
       voxel.position.set( cursorPos.x, cursorPos.y, 0.2 )
 
-			this._scene.add( voxel );
-      this._scene.add( light );
-      this.updateTiles(this._tileGrid.data)
-      // this._renderer.render(this._scene, this._camera);
+			this._scene.add( voxel )
+      this._scene.add( light )
+      // this.updateTiles(this._tileGrid.data)
+       // this._renderer.render(this._scene, this._camera);
     }
     addSpotLight(){
-      var light = new THREE.SpotLight( 0xffffff, 1.5 );
-				light.position.set( 0, 500, 2000 );
-				light.angle = Math.PI / 9;
-				light.castShadow = true;
-				light.shadow.camera.near = 1000;
-				light.shadow.camera.far = 4000;
-				light.shadow.mapSize.width = 1024;
-				light.shadow.mapSize.height = 1024;
+      var light = new THREE.SpotLight( 0xffffff, 1.5 )
+				light.position.set( 0, 500, 2000 )
+				light.angle = Math.PI / 9
+				light.castShadow = true
+				light.shadow.camera.near = 1000
+				light.shadow.camera.far = 4000
+				light.shadow.mapSize.width = 1024
+				light.shadow.mapSize.height = 1024
 				return light
     }
 

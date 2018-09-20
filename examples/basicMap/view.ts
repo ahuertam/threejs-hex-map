@@ -51,8 +51,10 @@ export async function initView(mapSize: number, initialZoom: number): Promise<Ma
     const mapView = new MapView()
     mapView.zoom = initialZoom
     mapView.load(map, options)
+    const controller = mapView.controller as DefaultMapViewController
+    controller.debugOutput = document.getElementById("coordinates") as HTMLElement
     mapView.onTileSelected = (tile: TileData) => {
-
+      // uncover tiles around initial selection
     }
     return mapView
 }
