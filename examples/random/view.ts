@@ -1,5 +1,5 @@
 import MapView from '../../src/MapView';
-import { loadFile, loadJSON, loadTexture } from '../../src/util';
+import { loadJSON } from '../../src/util';
 import { TextureAtlas, isMountain, isWater, TileData } from '../../src/interfaces';
 import {generateRandomMap} from "../../src/map-generator"
 import { varying } from './util';

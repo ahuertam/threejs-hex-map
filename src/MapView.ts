@@ -1,10 +1,11 @@
-import { PerspectiveCamera, Scene, WebGLRenderer, Vector3, Group, Camera, Vector2, Object3D } from 'three';
+import { PerspectiveCamera, Scene, WebGLRenderer, Vector3, Group, Camera, Vector2, Object3D, TextureLoader } from 'three';
 import {generateRandomMap} from "./map-generator"
 import MapMesh from "./MapMesh"
 import { TextureAtlas, TileData, TileDataSource, QR } from './interfaces';
-import {loadFile} from "./util"
+import {loadFile, loadTexture} from "./util"
 import { screenToWorld } from './camera-utils';
 import Grid from './Grid';
+import Building from "./Building";
 import DefaultTileSelector from "./DefaultTileSelector"
 import DefaultMapViewController from "./DefaultMapViewController"
 import MapViewController from './MapViewController';
@@ -90,7 +91,7 @@ export default class MapView implements MapViewControls, TileDataSource {
         return this
     }
     // ROTATE view
-  rotateVector(vectorToUse , degInRad){
+  rotateVector(vectorToUse: any , degInRad:any){
     this._camera.rotateOnAxis(vectorToUse, degInRad)
   }
     //
@@ -134,6 +135,7 @@ export default class MapView implements MapViewControls, TileDataSource {
 
         renderer.setClearColor(0x6495ED);
         renderer.setSize(window.innerWidth, window.innerHeight)
+        renderer.shadowMap.enabled = true;
 
         window.addEventListener('resize', (e) => this.onWindowResize(e), false);
 
@@ -180,31 +182,17 @@ export default class MapView implements MapViewControls, TileDataSource {
     getTile(q: number, r: number) {
         return this._mapMesh.getTile(q, r)
     }
-    addObject(){
-      var light = this.addSpotLight()
+    createBuilding(){
       // TODO METODO QUE OBTENGA LA POSICION DE LA CASILLA SELECCIONADA Y CREE AHI EL CUBO
-      let cursorPos = this._tileSelector.position
-      console.log(cursorPos)
-      var cubeGeo = new THREE.BoxGeometry( 1, 1, 1 )
-			var cubeMaterial = new THREE.MeshPhongMaterial( { color: Math.random() * 0xffffff, map: new THREE.TextureLoader().load( '../../assets/square-outline-textured.png' ) } )
-      var voxel = new THREE.Mesh( cubeGeo, cubeMaterial )
-      voxel.position.set( cursorPos.x, cursorPos.y, 0.2 )
+      const textureLoader = new TextureLoader()
+      const loadTexture = () => textureLoader.load("./../../assets/square-outline-textured.png")
 
-			this._scene.add( voxel )
-      this._scene.add( light )
-      // this.updateTiles(this._tileGrid.data)
-       // this._renderer.render(this._scene, this._camera);
-    }
-    addSpotLight(){
-      var light = new THREE.SpotLight( 0xffffff, 1.5 )
-				light.position.set( 0, 500, 2000 )
-				light.angle = Math.PI / 9
-				light.castShadow = true
-				light.shadow.camera.near = 1000
-				light.shadow.camera.far = 4000
-				light.shadow.mapSize.width = 1024
-				light.shadow.mapSize.height = 1024
-				return light
+      let currentPos = this._tileSelector
+      let building = new Building(loadTexture())
+      let obj = building.getMesh()
+      obj.position.set(currentPos.position.x, currentPos.position.y, 0)
+      obj.receiveShadow = true
+      this._scene.add(obj)
     }
 
     private animate = (timestamp: number) => {
@@ -293,6 +281,8 @@ export default class MapView implements MapViewControls, TileDataSource {
         var roundedAxialPos = cubeToAxial(roundedCubePos.x, roundedCubePos.y, roundedCubePos.z)
 
         // just look up the coords in our grid
-        return this._tileGrid.get(roundedAxialPos.q, roundedAxialPos.r)
+        var tile = this._tileGrid.get(roundedAxialPos.q, roundedAxialPos.r)
+        this._selectedTile = tile
+        return tile
     }
 }

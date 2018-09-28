@@ -52,7 +52,7 @@ export default class Controller implements MapViewController {
     }
 
     init(controls: MapViewControls, canvas: HTMLCanvasElement) {
-        this.controls = controls        
+        this.controls = controls
 
         document.addEventListener("keydown", this.onKeyDown, false)
 
@@ -71,7 +71,7 @@ export default class Controller implements MapViewController {
             e.preventDefault()
         }, false)
         canvas.addEventListener("touchend", (e) => this.onMouseUp(e.touches[0] || e.changedTouches[0] as any), false)
-        
+
         setInterval(() => this.showDebugInfo(), 200)
 
         this.controls.setOnAnimateCallback(this.onAnimate)
@@ -110,7 +110,7 @@ export default class Controller implements MapViewController {
     onMouseDown = (e: MouseEvent) => {
         this.pickingCamera = this.controls.getCamera().clone()
         this.mouseDownPos = screenToWorld(e.clientX, e.clientY, this.pickingCamera)
-        this.dragStartCameraPos = this.controls.getCamera().position.clone()                
+        this.dragStartCameraPos = this.controls.getCamera().position.clone()
     }
 
     onMouseEnter = (e: MouseEvent) => {
@@ -152,7 +152,7 @@ export default class Controller implements MapViewController {
                 this.controls.selectTile(tile)
                 this.selectedQR = tile
                 this.showDebugInfo()
-            }        
+            }
         }
 
         this.mouseDownPos = null // end drag
@@ -171,12 +171,21 @@ export default class Controller implements MapViewController {
 
         const tileQR = this.selectedQR
         const tileXYZ = qrToWorld(tileQR.q, tileQR.r) // world space
-        const camPos = this.controls.getViewCenter() //  this.controls.getCamera().position        
+        const camer = this.controls.getCamera()
+        const camPos = camer.position //  this.controls.getCamera().position
         const tile = this.controls.pickTile(tileXYZ)
 
-        this.debugText.innerHTML = `Selected Tile: QR(${tileQR.q}, ${tileQR.r}), 
-            XY(${tileXYZ.x.toFixed(2)}, ${tileXYZ.y.toFixed(2)})
-            &nbsp; &bull; &nbsp; Camera Looks At (Center): XYZ(${camPos.x.toFixed(2)}, ${camPos.y.toFixed(2)}, ${camPos.z.toFixed(2)})`
+        const rotac = camer.rotation
+        const degrees = {
+          x: THREE.Math.radToDeg(rotac.x),
+          y: THREE.Math.radToDeg(rotac.y),
+          z: THREE.Math.radToDeg(rotac.z)
+        }
+
+      this.debugText.innerHTML = `<div>Selected Tile: QR(${tileQR.q}, ${tileQR.r}),XY(${tileXYZ.x.toFixed(2)}, ${tileXYZ.y.toFixed(2)})</div>
+              <div>Camera Looks At (Center): XYZ(${camPos.x.toFixed(2)}, ${camPos.y.toFixed(2)}, ${camPos.z.toFixed(2)})</div>
+              <div>rotation XYZ (${rotac.x.toFixed(2)}, ${rotac.y.toFixed(2)}, ${rotac.z.toFixed(2)})</div>
+              <div>rotation deg XYZ (${ degrees.x.toFixed(2)}, ${degrees.y.toFixed(2)}, ${degrees.z.toFixed(2)})</div>`
     }
 
     panCameraTo(qr: QR, durationMs: number) {

@@ -33,62 +33,43 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "view", "input", "./util", "../../src/Grid"], function (require, exports, view_1, input_1, util_1, Grid_1) {
+define(["require", "exports", "view", "input", "./util"], function (require, exports, view_1, input_1, util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var mapSize = util_1.paramInt("size", 20);
-    var zoom = util_1.paramFloat("zoom", 20);
-    var map;
+    var mapSize = util_1.paramInt("size", 96);
+    var zoom = util_1.paramFloat("zoom", 25);
     function init() {
         return __awaiter(this, void 0, void 0, function () {
-            // map loading
-            function handleFileSelect(evt) {
-                var files = evt.target.files; // FileList object
-                // files is a FileList of File objects. List some properties.
-            }
-            var mapView;
+            var mapView, containers, _loop_1, i;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, view_1.initView(mapSize, zoom)];
                     case 1:
                         mapView = _a.sent();
                         input_1.initInput(mapView);
-                        document.getElementById('loadFile').addEventListener('change', handleFileSelect, false);
+                        containers = document.querySelectorAll("#textures div");
+                        console.log(containers);
+                        _loop_1 = function (i) {
+                            var container = containers.item(i);
+                            var name_1 = container.id;
+                            container.addEventListener("dragenter", noop, false);
+                            container.addEventListener("dragexit", noop, false);
+                            container.addEventListener("dragover", noop, false);
+                            container.addEventListener("drop", function (e) {
+                                e.preventDefault();
+                                replaceTexture(mapView, name_1, e.dataTransfer.files[0]);
+                            }, false);
+                        };
+                        for (i = 0; i < containers.length; i++) {
+                            _loop_1(i);
+                        }
                         return [2 /*return*/];
                 }
             });
         });
     }
-    function handleFileSelect(evt) {
-        var files = evt.target.files; // FileList object
-        // files is a FileList of File objects. List some properties.
-        var output = [];
-        for (var i = 0, f; f = files[i]; i++) {
-            var reader = new FileReader();
-            // Closure to capture the file information.
-            reader.onload = (function (theFile) {
-                return function (e) {
-                    try {
-                        map = JSON.parse(e.target.result);
-                        // console.log(map)
-                        //mapView.load(map, window.options);
-                        replaceMap(map);
-                    }
-                    catch (ex) {
-                        alert('ex when trying to parse json = ' + ex);
-                    }
-                };
-            })(f);
-            reader.readAsText(f);
-        }
-    }
-    document.getElementById('loadFile').addEventListener('change', handleFileSelect, false);
-    function replaceMap(mapToChange) {
-        // console.log(JSON.parse(JSON.stringify(mapToChange)))
-        var mapGrid = new Grid_1.default(mapToChange._width, mapToChange._height);
-        var mapGridGenerated = mapGrid.init(mapToChange.data);
-        window.mapView.load(mapGridGenerated, window.options);
-        // mapView.load(mapToChange, window.options);
+    function noop(e) {
+        e.preventDefault();
     }
     function replaceTexture(mapView, name, image) {
         var img = document.createElement("img");

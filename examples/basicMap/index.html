@@ -17,7 +17,6 @@
         canvas {
             display: block;
             height: 100%;
-            background-color: cornflowerblue;
         }
 
         #text {
@@ -42,41 +41,19 @@
             bottom: 0;
             text-align: left;
         }
-        #button-styles {
-          background: #3D94F6;
-   background-image: -webkit-linear-gradient(top, #3D94F6, #1E62D0);
-   background-image: -moz-linear-gradient(top, #3D94F6, #1E62D0);
-   background-image: -ms-linear-gradient(top, #3D94F6, #1E62D0);
-   background-image: -o-linear-gradient(top, #3D94F6, #1E62D0);
-   background-image: linear-gradient(to bottom, #3D94F6, #1E62D0);
-   -webkit-border-radius: 20px;
-   -moz-border-radius: 20px;
-   border-radius: 20px;
-   color: #FFFFFF;
-   font-family: Open Sans;
-   font-size: 40px;
-   font-weight: 100;
-   padding: 40px;
-   box-shadow: 1px 1px 20px 0px #000000;
-   -webkit-box-shadow: 1px 1px 20px 0px #000000;
-   -moz-box-shadow: 1px 1px 20px 0px #000000;
-   text-shadow: 1px 1px 20px #000000;
-   border: solid #337FED 1px;
-   text-decoration: none;
-   display: inline-block;
-   cursor: pointer;
-        }
-
-
         #textures {
-            max-width: 100%;
+            width: 100%;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
         }
 
         #textures > div {
             flex: 1;
             margin: 10px;
+        }
+
+        #textures #coordinates{
+          background-color:rgba(255,255,255,0.5)
         }
 
         #textures img {
@@ -93,11 +70,11 @@
   <div id="text">Use arrow keys or mouse drag to move the map, mousewheel to zoom. Click to select tile, Space to focus on selection. G toggles the grid. Use WASD keys to move the view and O key to add an Object.</div>
   <div id="debug">
       <div id="textures">
-          <div id="saveFile"> <button> SAVE MAP</button></div>
-          <label for="loadFile" class="btn btn-primary">LOAD MAP</label>
+          <div id="saveFile"> <button class="btn btn-primary"> SAVE MAP</button></div>
+          <div><label class="btn btn-primary" for="loadFile">LOAD MAP</label></div>
           <input type='file' id="loadFile" style="display: none"></input>
-          <div id="modifyData"> <button> Modify Map</button></div>
-      <div id="coordinates"></div>
+          <div id="modifyData"> <button class="btn btn-primary"> Modify Map</button></div>
+          <div id="coordinates"></div>
       </div>
   </div>
 <canvas></canvas>

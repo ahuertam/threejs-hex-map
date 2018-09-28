@@ -4,22 +4,16 @@ import {
     InstancedBufferGeometry,
     InstancedBufferAttribute,
     RawShaderMaterial,
-    BufferGeometry,
-    Vector2,
     Vector3,
     Vector4,
     Texture,
     Mesh,
     Group,
-    TextureLoader,
-    XHRLoader,
-    BufferAttribute,
     Sphere,
     Color,
     FrontSide,
     RepeatWrapping
 } from "three"
-import { loadFile, qrRange, loadTexture } from './util';
 import { qrToWorld } from './coords';
 import Grid from "./Grid";
 import { LAND_FRAGMENT_SHADER } from './shaders/land.fragment';
@@ -61,7 +55,7 @@ export interface MapMeshOptions {
      * Normal map for hills
      */
     hillsNormalTexture: Texture;
-
+    coastAtlasTexture: Texture;
     /**
      * Diffuse map for tree sprites
      */
@@ -187,7 +181,7 @@ export default class MapMesh extends Group implements TileDataSource {
 
     boundingSphere: Sphere
 
-    readonly loaded: Promise<void>
+    readonly loaded: Promise<void | [void,void,void,void]>
 
     private _showGrid = true
 
@@ -248,10 +242,17 @@ export default class MapMesh extends Group implements TileDataSource {
         this.loaded = Promise.all([
             this.createLandMesh(this.tiles.filter(t => !t.isMountain)),
             this.createMountainMesh(this.tiles.filter(t => t.isMountain)),
-            this.createTrees()
+            this.createTrees(),
+            this.addLight()
         ]).catch((err) => {
             console.error("Could not create MapMesh", err)
         })
+    }
+
+    addLight(){
+      var light = new THREE.AmbientLight( 0x404040 )
+    //  light.castShadow = true
+      this.add(light)
     }
 
     /**
